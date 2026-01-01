@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+
+.cl-avatar-Box {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* for input */
+
+input{
+  background-color: #ffffff;
+  accent-color:red ;
+  border: 1px solid #ccc;
+  color: #333;
+}
+
