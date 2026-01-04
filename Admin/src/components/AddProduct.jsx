@@ -7,7 +7,7 @@ const AddProduct = () => {
   const [productDetails, setProductDetails] = useState({
     name: "",
     image: "",
-    category : "",
+    category : "Veg",
     new_price: "",
     old_price: ""
   })
@@ -16,29 +16,39 @@ const AddProduct = () => {
   }
 
   const changeHandler = (e) =>{
-    setProductDetails({...productDetails, [e.target.name]: e.target.value})
+    setProductDetails({...productDetails, [e.target.name]:e.target.value})
   }
 
-  const add_Product = async() =>{
-    console.log(productDetails);
-    let responseData;
+  const Add_Product = async() =>{
+    // console.log(productDetails);
+
+    // let responseData;
     let product = productDetails;
 
     let formData = new FormData();
     formData.append('product', image);
 
-    await fetch('http://localhost:8000/upload', {
+    const response = await fetch('http://localhost:4000/upload',{
       method: 'POST',
-      headers: {
-        Accept:"application/json"
-      },
       body:formData,
-    }).then((res) => res.json()).then((data) =>{responseData=data});
-    if(responseData.success){
-      product.image = responseData.image_url;
+    })
+
+    const data = await response.json()
+    if(data.success) {
+      product.image = data.image_url;
       console.log(product);
       
     }
+    
+    // .then((resp) => resp.json()).then((data) =>{responseData=data})
+
+    // if(responseData.seccess)
+    // {
+    //   product.image = responseData.image_url;
+    //   console.log(product);
+      
+    // }
+    
     
   } 
 
@@ -70,11 +80,11 @@ const AddProduct = () => {
       </div>
       <div>
         <label htmlFor="file-input">
-          <img src={image?URL.createObjectURL(image):save} alt="" className='h-[100px] w-[100px]' />
+          <img src={image instanceof File ?URL.createObjectURL(image):save} alt="" className='h-[100px] w-[100px]' />
         </label>
         <input onChange={imageHandler} type="file" name='image' className=''/>
       </div>
-      <button onClick={()=>{add_Product()}} className='bg-orange-500 mt-4 hover:bg-orange-600 items-center justify-center flex w-[20%] cursor-pointer py-3 rounded-md text-white font-bold text-xl'>Add</button>
+      <button onClick={()=>{Add_Product()}} className='bg-orange-500 mt-4 hover:bg-orange-600 items-center justify-center flex w-[20%] cursor-pointer py-3 rounded-md text-white font-bold text-xl'>Add</button>
       
     </div>
   )
