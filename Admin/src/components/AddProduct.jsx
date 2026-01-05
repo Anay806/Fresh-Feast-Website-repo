@@ -20,9 +20,7 @@ const AddProduct = () => {
   }
 
   const Add_Product = async() =>{
-    // console.log(productDetails);
-
-    // let responseData;
+   
     let product = productDetails;
 
     let formData = new FormData();
@@ -37,17 +35,18 @@ const AddProduct = () => {
     if(data.success) {
       product.image = data.image_url;
       console.log(product);
+      await fetch('http://localhost:4000/addproduct',{
+        method:'POST',
+        headers:{
+          Accept:'application/json',
+          'Content-Type' : 'application/json',
+        },
+        body:JSON.stringify(product),
+      }).then((resp) =>resp.json()).then((data) =>{
+        data.success?alert("Product Added"): alert("Product Added Faild")
+      })
       
     }
-    
-    // .then((resp) => resp.json()).then((data) =>{responseData=data})
-
-    // if(responseData.seccess)
-    // {
-    //   product.image = responseData.image_url;
-    //   console.log(product);
-      
-    // }
     
     
   } 
@@ -76,6 +75,7 @@ const AddProduct = () => {
            <option value="Non-Veg">Non-Veg</option>
             <option value="Noodles">Noodles</option>
              <option value="Chinese">Chinese</option>
+             <option value="Pizza">Pizza</option>
         </select>
       </div>
       <div>
