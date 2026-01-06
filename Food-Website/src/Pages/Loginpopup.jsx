@@ -1,74 +1,148 @@
-import React, { useContext, useState } from "react";
-import cross from "../assets/cross_icon.png"
-import { DataContext } from "../Context/DataContext";
-import axios from "axios";
+import React, { useState } from "react";
 
-const Loginpopup = ({ setShowLogin }) => {
-  const { url, setToken } = useContext(DataContext)
-
-  const [currstate, setCurrState] = useState("Login");
-  const [data, setData] = useState({
+const Loginpopup = () => {
+  const [state, setState] = useState("Login");
+  const [formData, setFormData] = useState({
     username: "",
     password: "",
     email: "",
-  })
+  });
 
-  const onChangeHandler = (e) => {
-    setData(data => ({ ...data, [e.target.name]: e.target.value }))
-  }
+  const changeHandler = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  const onLogin = async (event) => {
-    event.preventDefault();
-    let newUrl = url;
-    if (currstate === "Login") {
-      newUrl += '/api/user/login'
-    } else {
-      newUrl += '/api/user/register'
+  const login = async () => {
+    console.log("login", formData);
+     let responseData;
+    await fetch("http://localhost:4000/login", {
+      method: "POST",
+      headers: {
+        Accept: "application/form-data",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((resp) => resp.json())
+      .then((data) => (responseData = data));
+    if (responseData.success) {
+      localStorage.setItem("auth-token", responseData.token);
+      window.location.replace("/");
     }
-    const response = await axios.post(newUrl, data)
-    if (response.data.success) {
-      setToken(response.data.token)
-      localStorage.setItem("token", response.data.token)
-      setShowLogin(false)
+    else{
+      alert(responseData.errors)
     }
-    else {
-      alert(response.data.message)
+  };
+
+  const signup = async (e) => {
+    e.preventDefault();
+    console.log("signup", formData);
+    let responseData;
+    await fetch("http://localhost:4000/signup", {
+      method: "POST",
+      headers: {
+        Accept: "application/form-data",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((resp) => resp.json())
+      .then((data) => (responseData = data));
+    if (responseData.success) {
+      localStorage.setItem("auth-token", responseData.token);
+      window.location.replace("/");
     }
-  }
+    else{
+      alert(responseData.errors)
+    }
+  };
 
   return (
-    <div className="position-absolute z-index-1 w-full h-full bg-white bg-opacity-80 top-0 left-0 grid">
-      <form onSubmit={onLogin} className="place-self-center w-[23vw,330px] color-[#808080] bg-orange-300 flex flex-col gap-[25px] px-4 py-4 rounded-md font-size-[14px] my-30">
-        <div className="flex justify-between items-center mx-3">
-          <h2 className="text-xl color-white font-semibold">{currstate}</h2>
-          <img src={cross} alt="" className="w-[16px] cursor-pointer" onClick={() => setShowLogin(false)} />
-        </div>
-        <div className="flex flex-col gap-4">
-          {currstate === "Login" ? (
-            <></>
+    <div className="h-[400px ]   flex items-center justify-center bg-gray-100">
+      <div className="bg-gray-300 my-20 w-[500px] rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-semibold text-center mb-6">{state}</h2>
+        <form onSubmit={signup} className="space-y-4">
+          {state === "Signup" ? (
+            <div>
+              <label className="block text-sm font-medium mb-1">Username</label>
+              <input
+                name="username"
+                value={formData.username}
+                onChange={changeHandler}
+                type="text"
+                placeholder="Enter username"
+                className="w-full px-3 py-2 rounded-md border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
           ) : (
-            <input type="text" name='username' onChange={onChangeHandler} value={data.username} placeholder="Your Name" className="outline-none border b-1-[#c9c9c9] p-2 border-radius-[4px] rounded-md mx-3" required />
+            <></>
           )}
-          <input name="email" onChange={onChangeHandler} value={data.email} type="email" placeholder="Your Email" className="rounded-md mx-3 px-2 py-2" required />
-          <input name='password' onChange={onChangeHandler} value={data.password} type="password" placeholder="Password" className="rounded-md mx-3 px-2 py-2" required />
-        </div>
-        <button type="submit" className="my-2 bg-white mx-30 p-2 rounded-md font-bold hover:bg-tomato-500 font-size-[15px] cursor-pointer">{currstate === "Sign Up" ? "Create account" : "Login"}</button>
-        <div className="flex items-start gap-3 mt-[-15px]">
-          <input type="checkbox" className="mt-[5px]" required />
-          <p>By continuing, i agree to the terms of use & privacy policy.</p>
-        </div>
-        {currstate === "Login" ? (
-          <p className="color-darkcyan font-weight-500 cursor-pointer">
-            Create A new account? <span className="color-black font-bold cursor-pointer" onClick={() => setCurrState("Sign Up")}>Click here</span>
-          </p>
-        ) : (
-          <p className="color-darkcyan font-weight-500 cursor-pointer">
-            Already have an account <span className="color-black font-bold cursor-pointer" onClick={() => setCurrState("Login")}>Login here</span>
-          </p>
-        )}
-      </form>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">Email</label>
+            <input
+              name="email"
+              value={formData.email}
+              onChange={changeHandler}
+              type="text"
+              placeholder="Enter email"
+              className="w-full px-3 py-2 rounded-md border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Password</label>
+            <input
+              name="password"
+              value={formData.password}
+              onChange={changeHandler}
+              type="text"
+              placeholder="Enter password"
+              className="w-full px-3 py-2 rounded-md border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-500"
+            />
+          </div>
+          <button
+            type="submit"
+            onClick={() => {
+              state === "Login" ? login() : signup();
+            }}
+            className="w-full bg-orange-600 text-white py-2 rounded-md hover:bg-orange-700 transition"
+          >
+            Continue
+          </button>
+          {state === "Signup" ? (
+            <p>
+              Already have an account?{" "}
+              <span
+                onClick={() => {
+                  setState("Login");
+                }}
+                className="text-orange-500 font-semibold cursor-pointer"
+              >
+                Login here
+              </span>
+            </p>
+          ) : (
+            <p>
+              Create An Account{" "}
+              <span
+                onClick={() => {
+                  setState("Signup");
+                }}
+                className="text-orange-500 font-semibold cursor-pointer"
+              >
+                Click here
+              </span>
+            </p>
+          )}
+
+          <div className="flex gap-1 ">
+            <input type="checkbox" className="cursor-pointer" />
+            <p>By countinuing i agree to the terms of use & privacy policy</p>
+          </div>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default Loginpopup;

@@ -97,7 +97,7 @@ const Navbar = ({ getLocation, location , openDropDown, setOpenDropDown}) => {
             >
               <li>Contact</li>
             </NavLink>
-            <NavLink to={"/Loginpopup"}
+            {localStorage.getItem('auth-token')?<button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace('/')}}>Logout</button>: <NavLink to={"/Loginpopup"}
              className={({isActive}) =>
               `${ 
                 isActive 
@@ -107,7 +107,8 @@ const Navbar = ({ getLocation, location , openDropDown, setOpenDropDown}) => {
 
             
 
-            </NavLink>
+            </NavLink>}
+           
           </ul>
 
           <Link to={"/cart"} className="relative">
