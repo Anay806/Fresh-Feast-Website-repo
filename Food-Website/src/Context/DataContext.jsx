@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 export const DataContext = createContext(null);
 
 export const DataProvider = ({ children }) => {
+  const [all_product, setAll_Product] = useState([])
   const [data, setData] = useState([]);
   const url = `http://localhost:4000`
   const [token, setToken] =useState("")
@@ -13,10 +14,12 @@ export const DataProvider = ({ children }) => {
 
   const featchProducts = async () => {
     try {
-      const url = await axios.get(`https://dummyjson.com/recipes`);
+      const url = await axios.get(`http://localhost:4000/allproducts`);
+      console.log(url);
       
       
-      const productsData = url.data.recipes
+      
+      const productsData = url.data
       console.log(productsData);
       
       setData(productsData);
@@ -35,10 +38,10 @@ export const DataProvider = ({ children }) => {
       newVal = ["All",...new Set(newVal)];
       return newVal;
     };
-    const CategoryOnlyData = getCategory(data, "cuisine");
+    const CategoryOnlyData = getCategory(data, "category");
   
     
-    const brandOnlyData =  getCategory(data, "mealType")
+    const brandOnlyData =  ["All", "true", "false"]
 
   useEffect(() => {
     featchProducts();

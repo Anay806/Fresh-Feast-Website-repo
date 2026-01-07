@@ -80,7 +80,7 @@ const Carousel = () => {
     <div >
       <Slider {...settings}>
         {Array.isArray(data) &&
-          data.slice(0, 29).map((item, index) => {
+          data.slice(0, 30).map((item, index) => {
             return (
               <div
                 key={index}

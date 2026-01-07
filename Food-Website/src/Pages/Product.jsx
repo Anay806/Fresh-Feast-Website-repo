@@ -39,9 +39,9 @@ const Product = () => {
 
   const filteredData = data?.filter((item) =>
     item.name?.toLowerCase().includes(search?.toLowerCase()) &&
-    (category === 'All' || item.cuisine === category) &&
-    (brand === 'All' || item.difficulty === brand) &&
-    (item.caloriesPerServing >= priceRange[0] && item.caloriesPerServing <= priceRange[1])
+    (category === 'All' || item.category === category) &&
+    (brand === 'All' || item.available === (brand === 'true')) &&
+    (item.new_price >= priceRange[0] && item.new_price <= priceRange[1])
   )
 
    const dynamicPage = Math.ceil(filteredData?.length / 8)
@@ -64,7 +64,7 @@ const Product = () => {
               handleCategoryChange={handleCategoryChange}
               handleBrandChange={handleBrandChange}
             ></FilterSection>
-            <div className="grid grid-cols-4 gap-2  mt-10 mb-40 flex-1">
+            <div className="grid grid-cols-4 gap-2  mt-10 mb-20 flex-1">
               {filteredData?.slice(page * 8 - 8,page * 8).map((item, index) => {
                 return (
                   <>
@@ -89,13 +89,13 @@ const Product = () => {
                       <div className="flex  justify-between items-center ">
                         <div>
                           <div className="  w-[40px] justify-center items-center font-bold text-orange-800 text-red text-[20px] px-1">
-                            ${item.caloriesPerServing}
+                            ${item.new_price}
                           </div>
                         </div>
                         <div className="flex pr-3 ">
                            <img src={starr} alt="star" className="w-12 h-12" />
                         <p className=" mt-3  font-bold text-orange-600 items-center">
-                          {item.rating}
+                          4.5
                         </p>
                         </div>
                        

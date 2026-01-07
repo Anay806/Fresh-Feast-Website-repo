@@ -18,7 +18,7 @@ const SingleProductPage = () => {
 
   const getSingleProduct = async () => {
     try {
-      const res = await axios.get(`https://dummyjson.com/recipes/${params.id}`);
+      const res = await axios.get(`http://localhost:4000/product/${params.id}`);
       const singleProduct = res.data;
       console.log(singleProduct);
 
@@ -30,7 +30,7 @@ const SingleProductPage = () => {
 
   useEffect(() => {
     getSingleProduct();
-  }, []);
+  }, [params.id]);
 
   return (
     <>
@@ -52,17 +52,16 @@ const SingleProductPage = () => {
                 {singleProduct.name}
               </h1>
               <div className=" font-semibold text-xl text-gray-600">
-                {singleProduct.cuisine?.toUpperCase()} /{" "}
-                {singleProduct.mealType} / {singleProduct.ingredients}
+                {singleProduct.category?.toUpperCase()}
               </div>
               <div className="flex gap-8 items-center">
                 <p className="text-2xl text-red-500 font-bold">
-                  $ {singleProduct.reviewCount}
+                  $ {singleProduct.new_price}
                 </p>
                 <div className="flex gap-2 items-center ml-8 ">
                   
                   <img src={star} alt="" />
-                  <p className="text-white font-bold mb-1 bg-red-500 py-1 px-2 rounded-full">{singleProduct.rating}</p>
+                  <p className="text-white font-bold mb-1 bg-red-500 py-1 px-2 rounded-full">${singleProduct.old_price}</p>
                 </div>
               </div>
 

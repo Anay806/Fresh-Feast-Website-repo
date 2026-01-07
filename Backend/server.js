@@ -135,6 +135,20 @@ app.get('/allproducts', async (req,res) =>{
   
 })
 
+//Getting Single Product by ID
+app.get('/product/:id', async (req,res) =>{
+  try {
+    let product = await Product.findOne({id: parseInt(req.params.id)})
+    if(product) {
+      res.send(product)
+    } else {
+      res.status(404).json({success: false, message: "Product not found"})
+    }
+  } catch(error) {
+    res.status(500).json({success: false, message: error.message})
+  }
+})
+
 // Shema Creating for User
 const Users = mongoose.model('Users', {
   name:{

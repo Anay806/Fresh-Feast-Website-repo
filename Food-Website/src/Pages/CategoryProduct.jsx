@@ -10,8 +10,8 @@ const CategoryProduct = () => {
 
   const getFilterData = async() =>{
     try {
-      const res = await axios.get(`https://dummyjson.com/recipes?sortBy=${category}`)
-      const data = res.data.cuisine
+      const res = await axios.get(`http://localhost:4000/allproduct${category}`)
+      const data = res.data.category
       console.log(data);
       
       setSerachData(data)

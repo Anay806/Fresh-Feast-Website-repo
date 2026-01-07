@@ -97,7 +97,7 @@ const Navbar = ({ getLocation, location , openDropDown, setOpenDropDown}) => {
             >
               <li>Contact</li>
             </NavLink>
-            {localStorage.getItem('auth-token')?<button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace('/')}}>Logout</button>: <NavLink to={"/Loginpopup"}
+            {localStorage.getItem('auth-token')?<button onClick={()=>{localStorage.removeItem('auth-token');window.location.replace('/')}} className="bg-orange-600 text-white px-3 py-1 text-[18px] rounded-md">Logout</button>: <NavLink to={"/Loginpopup"}
              className={({isActive}) =>
               `${ 
                 isActive 

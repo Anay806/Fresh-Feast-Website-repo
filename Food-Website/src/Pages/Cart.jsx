@@ -17,7 +17,7 @@ const Cart = ({location, getLocation}) => {
   const navigate = useNavigate()
   
 
-  const totalPrice = cartItems.reduce((total, item) => total + item.reviewCount, 0)
+  const totalPrice = cartItems.reduce((total, item) => total + item.new_price, 0)
 
   return (
     <div className="mt-10 max-w-6xl mx-auto mb-5">
@@ -40,7 +40,7 @@ const Cart = ({location, getLocation}) => {
                     <div>
                       <h1 className="w-[300px] line-clamp-2">{item.name}</h1>
                       <p className="text-red-500 font-semibold text-lg">
-                        {item.reviewCount}
+                        {item.new_price}
                       </p>
                     </div>
                   </div>

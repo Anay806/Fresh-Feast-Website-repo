@@ -8,6 +8,7 @@ export const CartProvider = ({children}) =>{
 
 
   const [cartItems, setCartItems] = useState([]);
+  
 
   const addToCart = (product) =>{
     const itemInCart = cartItems.find((item) => item.id === product.id);

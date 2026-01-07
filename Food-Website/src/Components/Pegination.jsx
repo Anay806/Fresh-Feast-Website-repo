@@ -21,7 +21,7 @@ const getPages = ( current, total) => {
 const Pegination = ({ page, pageHandler, dynamicPage }) => {
   return (
     <div>
-      <div className="mb-30 space-x-4 flex justify-center items-center ">
+      <div className="mb-20 space-x-4 flex justify-center items-center ">
         <button
           disabled={page === 1}
           onClick={() => pageHandler(page - 1)}

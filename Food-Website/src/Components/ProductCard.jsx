@@ -29,10 +29,10 @@ const ProductCard = () => {
           <div className="flex gap-8">
             <div className="grid grid-cols-4 gap-7 mt-10 ">
               {
-                data?.slice(0,28).map((product, index) =>{
+                data?.slice(0,31).map((product, index) =>{
                   return <div key={index} className="border relative border-gray-100 rounded-2xl cursor-pointer hover:scale-105 hover:shadow-2xl transition-all p-2 h-max"><img src={product.image} alt="" onClick={()=>navigate(`/product/${product.id}`)} className="bg-gray-100 aspect-square" />
                   <h1 className="line-clamp-2 p-1 font-semibold">{product.name}</h1>
-                  <p className="my-1 text-lg text-gray-800 font-bold">${product.prepTimeMinutes}</p>
+                  <p className="my-1 text-lg text-gray-800 font-bold">₹{product.new_price}</p>
                   <button onClick={() =>addToCart(product)} className="bg-orange-600 hover:bg-orange-700 px-3 py-2 text-lg text-lg rounded-md text-white w-full cursor-pointer flex gap-1 items-center justify-center font-semibold "><MdOutlineShoppingCart className="w-6 h-6" />Add to cart</button>
                   
                   </div>
