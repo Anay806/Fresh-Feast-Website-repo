@@ -32,10 +32,8 @@ export const DataProvider = ({ children }) => {
 
 
    const getCategory = (data, property) => {
-      let newVal = data?.map((elem) => {
-        return elem[property];
-      });
-      newVal = ["All",...new Set(newVal)];
+      if (!Array.isArray(data)) return ['All']
+      const newVal = [ 'All', ...new Set(data.map((item) =>item[property]))]
       return newVal;
     };
     const CategoryOnlyData = getCategory(data, "category");
@@ -45,6 +43,18 @@ export const DataProvider = ({ children }) => {
 
   useEffect(() => {
     featchProducts();
+
+    if(localStorage.getItem('auth-token')){
+      fetch('http://localhost:4000/getcart',{
+        method:'POST',
+        headers:{
+          Accept:'application/form-data',
+          'auth-token' : `${localStorage.getItem('auth-token')}`,
+          'Content-Type' :'application/json',
+        },
+        body:"",
+      }).then((response) =>response.json()).then((data) =>setData(data));
+    }
   },[]);
 
   return (

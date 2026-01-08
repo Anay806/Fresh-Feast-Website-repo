@@ -13,8 +13,8 @@ const Navbar = ({ getLocation, location , openDropDown, setOpenDropDown}) => {
   }
    const { cartItems } = useCart();
   return (
-    <div className="bg-white-400 w-full shadow-2xl px-4 py-3 ">
-      <div className="flex justify-between items-center max-w-6xl mx-auto ">
+    <div className=" w-full shadow-2xl px-4 py-3 sticky top-0 z-50 isolation-isolate bg-white-500 ">
+      <div className="flex justify-between items-center  max-w-6xl mx-auto ">
         {/* Logo-section */}
         <div className=" gap-7 flex items-center ">
           <Link to="/">

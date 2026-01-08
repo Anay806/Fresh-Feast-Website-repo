@@ -7,7 +7,7 @@ import ListProduct from '../../components/ListProduct'
 
 const Admin = () => {
   return (
-    <div  className='flex'>
+    <div  className='flex min-h-screen bg-gray-100'>
       <Sidebar  />
       <div className='flex-1'>
         <Routes>

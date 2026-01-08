@@ -23,6 +23,20 @@ export const CartProvider = ({children}) =>{
     } else{
       // Add new item with quantity 1
        setCartItems([...cartItems, {...product, quantity: 1}])
+       if(localStorage.getItem('auth-token')){
+        console.log(localStorage.getItem("auth-token"));
+        
+           fetch('http://localhost:4000/addtocart',{
+            method:'POST',
+            headers:{
+              Accept: 'application/form-data',
+              'auth-token': `${localStorage.getItem('auth-token')}`,
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({"product":product})
+
+           }).then((response) =>response.json()).then((data) =>console.log(data));
+       }
        toast.success("Product is Added to cart")
 
     }
@@ -50,6 +64,18 @@ export const CartProvider = ({children}) =>{
 
   const deleteItem = (productId) =>{
     setCartItems(cartItems.filter(item =>item.id !== productId))
+    if(localStorage.getItem('auth-token')){
+       fetch('http://localhost:4000/removefromcart',{
+            method:'POST',
+            headers:{
+              Accept: 'application/form-data',
+              'auth-token': `${localStorage.getItem('auth-token')}`,
+              'Content-Type': 'application/json',
+            },
+            body:JSON.stringify({"product":productId})
+
+           }).then((response) =>response.json()).then((data) =>console.log(data));
+    }
     toast.success("Product Delated")
   }
 

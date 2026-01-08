@@ -227,6 +227,53 @@ app.post('/login', async(req,res) =>{
   }
 })
 
+//Creating middleware  to addtocart(fetch user)
+const fetchUser = async (req,res, next) =>{
+  const token = req.header('auth-token');
+  if(!token){
+    res.status(401).send({errors:"Please Authenticate using valid Token"})
+  }
+  else{
+    try {
+      const data = jwt.verify(token,'secret_ecom');
+      req.user = data.user;
+      next();
+    } catch (error) {
+      res.status(401).send({errors: "Please Authentice using a valid token"}) 
+    }
+  }
+}
+//creating endpoint for adding products in cartData
+app.post('/addtocart',fetchUser, async (req, res) =>{
+  console.log("Added", req.body.product);
+  let userData = await Users.findOne({_id:req.user.id});
+  userData.cartData[req.body.product] += 1;
+  await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData})
+  res.send({success:true, message: "Added"})
+  
+})
+
+
+//creating endPoint to remove product from cartData
+
+app.post('/removefromcart',fetchUser,async (req, res) =>{
+  console.log("removed", req.body.product);
+  let userData = await Users.findOne({_id:req.user.id});
+  if(userData.cartData[req.body.product] > 0)
+  userData.cartData[req.body.product]  -= 1;
+  await Users.findOneAndUpdate({_id:req.user.id},{cartData:userData.cartData})
+  res.send({success:true, message:"item Removed"})
+})
+
+
+//creating to get cartData
+app.post('/getcart',fetchUser,async(req,res) =>{
+  console.log('GetCart');
+  let userData = await Users.findOne({_id:req.user.id});
+  res.json(userData.cartData);
+  
+})
+
 
 
 
