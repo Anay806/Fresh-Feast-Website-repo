@@ -37,14 +37,14 @@ const Product = () => {
 
  
 
-  const filteredData = data?.filter((item) =>
+  const filteredData =data && data.length? data.filter((item) =>
     item.name?.toLowerCase().includes(search?.toLowerCase()) &&
     (category === 'All' || item.category === category) &&
     (brand === 'All' || item.available === (brand === 'true')) &&
     (item.new_price >= priceRange[0] && item.new_price <= priceRange[1])
-  )
+  ) : [];
 
-   const dynamicPage = Math.ceil(filteredData?.length / 8)
+  //  const dynamicPage = Math.ceil(filteredData?.length / 8)
 
   return (
     <div>
@@ -89,7 +89,7 @@ const Product = () => {
                       <div className="flex  justify-between items-center ">
                         <div>
                           <div className="  w-[40px] justify-center items-center font-bold text-orange-800 text-red text-[20px] px-1">
-                            ${item.new_price}
+                            ₹{item.new_price}
                           </div>
                         </div>
                         <div className="flex pr-3 ">
@@ -100,6 +100,7 @@ const Product = () => {
                         </div>
                        
                       </div>
+                      <p>{item.description}</p>
                     </div>
 
                     <button
@@ -116,7 +117,7 @@ const Product = () => {
               })}
             </div>
            </div>
-            <Pegination pageHandler={pageHandler} page={page}  dynamicPage={dynamicPage}/>
+            <Pegination pageHandler={pageHandler} page={page}  />
           </div>
         ) : (
           <div>

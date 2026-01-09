@@ -80,7 +80,7 @@ const Carousel = () => {
     <div >
       <Slider {...settings}>
         {Array.isArray(data) &&
-          data.slice(0, 30).map((item, index) => {
+          data.slice(0, 35).map((item, index) => {
             return (
               <div
                 key={index}
@@ -95,7 +95,7 @@ const Carousel = () => {
                       {item.name}
                     </h1>
                     <p className="md:w-[500px] lineclamp-3  text-white-700 pr-7">
-                      {item.ingredients}
+                      {item.description}
                     </p>
                     <button  onClick={()=>navigate(`/product/${item.id}`)} className="bg-gradient-to-r from-[#FD7F2C] to-[#FF6200] rounded-md px-3 py-1 text-white font-semibold hover:scale-105 ">
                       Shop now

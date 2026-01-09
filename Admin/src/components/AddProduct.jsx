@@ -58,6 +58,10 @@ const AddProduct = () => {
         <p className='font-semibold text-xl py-1'>Product Name</p>
         <input value={productDetails.name} onChange={changeHandler} type="text" name='name' placeholder='Type here' className='w-full px-4 py-2 bg-gray-50 border border-orange-300 rounded-md outline-none focus:ring-orange-600' />
       </div>
+      <div className='w-full'>
+        <p className='font-semibold text-xl py-1'>Product Description</p>
+        <input value={productDetails.description} onChange={changeHandler} type="text" name='description' placeholder='Type here' className='w-full px-4 py-2 bg-gray-50 border border-orange-300 rounded-md outline-none focus:ring-orange-600' />
+      </div>
       <div className='flex' >
         <div className='w-[45%] py-1'>
           <p className='font-semibold text-xl py-1'>Price</p>

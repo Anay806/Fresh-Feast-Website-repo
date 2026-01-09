@@ -36,24 +36,26 @@ const ListProduct = () => {
       <div className="grid grid-cols-7 w-full sticky top-0 z-10  bg-orange-500 text-white font-semibold py-3 px-6 rounded-lg">
         <p>Product</p>
         <p>Title</p>
+        <p>Description</p>
         <p>Old Price</p>
         <p>New Price</p>
         <p>Category</p>
         <p>Remove</p>
       </div>
-      <div>d
+      <div>
         <hr />
         {allProducts.map((product, index) => {
           return (
             <>
-            <div key={index} className="grid grid-cols-7 w-full items-center bg-white px-6 py-4 border-b hover:bg-gray-50 transition rounded-md shadow-sm">
+            <div key={index} className="grid grid-cols-7 gap-5 w-full items-center bg-white px-6 py-4 border-b hover:bg-gray-50 transition rounded-md shadow-sm">
               <img src={product.image} alt="" className="w-14 h-14 object-cover rounded-lg border " />
-              <p className="font-semibold font-medium text-gray-800">{product.name}</p>
-              <p className="font-semibold line-through ml-5 text-red-500">{product.old_price}</p>
-              <p className="font-semibold text-green-600">{product.new_price}</p>
-              <p className="font-semibold px-3 py-1 text-sm  roundeed-full bg-blue-100 text-blue-600 w-fit">{product.category}</p>
+              <p className="font-semibold font-medium text-gray-800 w-[18%]">{product.name}</p>
+              <p className="font-semibold text-[10px] text-gray-800  w-[23%]">{product.description}</p>
+              <p className="font-semibold line-through ml-5 text-red-500  w-[14%]">{product.old_price}</p>
+              <p className="font-semibold text-green-600 w-[14%]">{product.new_price}</p>
+              <p className="font-semibold px-3 py-1 text-sm  roundeed-full bg-blue-100 text-blue-600 w-fit w-[18%]">{product.category}</p>
               <p>
-                <MdOutlineDeleteForever onClick={()=>{remove_product(product.id)}} className="w-9 h-7 cursor-pointer hover:scale-110 trnsition"/>
+                <MdOutlineDeleteForever onClick={()=>{remove_product(product.id)}} className=" h-10 cursor-pointer hover:scale-110 trnsition w-[13%]"/>
               </p>
             </div>
             <hr />

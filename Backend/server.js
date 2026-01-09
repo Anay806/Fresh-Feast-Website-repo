@@ -67,6 +67,10 @@ const Product = mongoose.model("Product", {
     type: String,
     required: true
    },
+   description:{
+    type:String,
+    required:true
+   },
    new_price: {
     type : Number,
     required : true
@@ -102,6 +106,7 @@ app.post('/addproduct', async (req, res) =>{
     name: req.body.name,
     image: req.body.image,
     category: req.body.category,
+    description: req.body.description,
     new_price: req.body.new_price,
     old_price: req.body.old_price,
   });
@@ -133,6 +138,19 @@ app.get('/allproducts', async (req,res) =>{
   console.log("All Product Feached");
   res.send(products)
   
+})
+
+//creating category  Api
+app.get("/allproduct/:category", async(req,res) =>{
+  try {
+    const category = req.params.category;
+    const products = await Product.find({category: category,});
+    res.status(200).json({success: true, products})
+    
+  } catch (error) {
+    res.status(500).json({success: false})
+    
+  }
 })
 
 //Getting Single Product by ID
